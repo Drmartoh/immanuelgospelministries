@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Sermons | Immanuel Gospel Ministries{% endblock %}
+{% block content %}
+<section class="page-hero page-hero--sermons">
+    <div class="layout-container page-hero__inner">
+        <p class="page-hero__eyebrow">Watch &amp; listen</p>
+        <h1 class="page-hero__title font-display">Sermons</h1>
+        <p class="page-hero__subtitle">Video and audio messages — upload thumbnails and links from the admin.</p>
+    </div>
+</section>
+
+<section class="relative">
+    <div class="pointer-events-none absolute inset-0 section-mesh opacity-80"></div>
+    <div class="relative layout-container layout-section">
+        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {% for sermon in sermons %}
+                <article class="card-elevated flex flex-col overflow-hidden" data-aos="fade-up">
+                    <div class="aspect-[16/10] w-full overflow-hidden bg-slate-100">
+                        <img src="{{ sermon.thumbnail_url }}" alt="{{ sermon.title }}" class="h-full w-full object-cover" loading="lazy">
+                    </div>
+                    <div class="flex flex-1 flex-col p-5">
+                        <h2 class="font-display font-semibold text-slate-900 leading-snug">{{ sermon.title }}</h2>
+                        <p class="mt-1 text-sm text-indigo-600">{{ sermon.preacher }} · {{ sermon.date }}</p>
+                        {% if sermon.video_url %}
+                            <div class="embed-responsive embed-responsive--16x9 mt-4">
+                                <iframe src="{{ sermon.embed_video_url }}" title="{{ sermon.title }}" allowfullscreen loading="lazy"></iframe>
+                            </div>
+                        {% endif %}
+                        {% if sermon.audio_file %}
+                            <audio controls class="mt-4 w-full rounded-lg">
+                                <source src="{{ sermon.audio_file.url }}">
+                            </audio>
+                        {% endif %}
+                    </div>
+                </article>
+            {% empty %}
+                <div class="glass-card col-span-full p-10 text-center text-slate-600 sm:col-span-2 lg:col-span-3">
+                    <p>No sermons uploaded yet.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

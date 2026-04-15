@@ -1,0 +1,383 @@
+/* Immanuel Gospel Ministries — global UI */
+
+:root {
+    --brand-indigo: #4f46e5;
+    --brand-indigo-dark: #3730a3;
+    --brand-sky: #0ea5e9;
+    --surface: #f1f5f9;
+    --container-max: 72rem;
+}
+
+/* Alpine: hide until ready (prevents stacked carousel slides / broken menus) */
+[x-cloak] {
+    display: none !important;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+img,
+video,
+iframe {
+    max-width: 100%;
+}
+
+/* Centered content width — use on every page for alignment */
+.layout-container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+    .layout-container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+.layout-section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+    .layout-section {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+}
+
+/* Full-page soft gradient (no fixed attachment — avoids mobile layout bugs) */
+.page-surface {
+    background-color: var(--surface);
+    background-image:
+        radial-gradient(ellipse 90% 55% at 50% -25%, rgba(99, 102, 241, 0.18), transparent 55%),
+        radial-gradient(ellipse 70% 45% at 100% 0%, rgba(14, 165, 233, 0.12), transparent 50%),
+        radial-gradient(ellipse 55% 35% at 0% 100%, rgba(129, 140, 248, 0.14), transparent 45%),
+        linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+/* Subtle mesh for alternating sections */
+.section-mesh {
+    background-image:
+        radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.06) 0%, transparent 45%);
+}
+
+.section-mesh-dark {
+    background: linear-gradient(145deg, #1e1b4b 0%, #312e81 40%, #1e3a5f 100%);
+    color: #e2e8f0;
+}
+
+/* Hero (home) */
+.hero-bg {
+    background: linear-gradient(115deg, rgba(15, 23, 42, 0.82) 0%, rgba(49, 46, 129, 0.75) 45%, rgba(30, 58, 95, 0.78) 100%),
+        url("https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&w=1600&q=80")
+            center/cover no-repeat;
+    padding: 2.5rem 0 3rem;
+}
+
+@media (min-width: 768px) {
+    .hero-bg {
+        padding: 3.5rem 0 4rem;
+    }
+}
+
+/* Inner page heroes — image + overlay */
+.page-hero {
+    position: relative;
+    isolation: isolate;
+    padding: 3rem 0 3.5rem;
+    color: #fff;
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .page-hero {
+        padding: 3.5rem 0 4.5rem;
+    }
+}
+
+.page-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: saturate(1.05);
+    transform: scale(1.02);
+}
+
+.page-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(15, 23, 42, 0.88) 0%, rgba(67, 56, 202, 0.72) 50%, rgba(30, 64, 175, 0.75) 100%);
+}
+
+.page-hero__inner {
+    position: relative;
+    z-index: 1;
+}
+
+.page-hero__eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.9;
+    margin-bottom: 0.5rem;
+}
+
+.page-hero__title {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.2;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.25);
+    word-wrap: break-word;
+}
+
+.page-hero__subtitle {
+    margin-top: 0.75rem;
+    max-width: 36rem;
+    opacity: 0.92;
+    font-size: 1.05rem;
+    line-height: 1.55;
+}
+
+.page-hero--about::before {
+    background-image: url("https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1600&q=80");
+}
+
+.page-hero--services::before {
+    background-image: url("https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1600&q=80");
+}
+
+.page-hero--giving::before {
+    background-image: url("https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1600&q=80");
+}
+
+.page-hero--events::before {
+    background-image: url("https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1600&q=80");
+}
+
+.page-hero--sermons::before {
+    background-image: url("https://images.unsplash.com/photo-1507692049640-349dea580c3d?auto=format&fit=crop&w=1600&q=80");
+}
+
+.page-hero--prayer::before {
+    background-image: url("https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1600&q=80");
+}
+
+.page-hero--contact::before {
+    background-image: url("https://images.unsplash.com/photo-1423666639041-f56000c27a9a?auto=format&fit=crop&w=1600&q=80");
+}
+
+/* Cross accent */
+.cross-icon {
+    width: 56px;
+    height: 56px;
+    position: relative;
+}
+
+.cross-icon::before,
+.cross-icon::after {
+    content: "";
+    position: absolute;
+    background: linear-gradient(180deg, #e0e7ff 0%, #818cf8 100%);
+    border-radius: 999px;
+}
+
+.cross-icon::before {
+    left: 22px;
+    top: 0;
+    width: 12px;
+    height: 56px;
+}
+
+.cross-icon::after {
+    left: 4px;
+    top: 20px;
+    width: 48px;
+    height: 12px;
+}
+
+/* Cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 1rem;
+    box-shadow: 0 4px 24px rgba(15, 23, 42, 0.08);
+}
+
+.card-elevated {
+    background: #fff;
+    border-radius: 1rem;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-elevated:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(79, 70, 229, 0.12), 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+.card-link {
+    display: block;
+    background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+    border-radius: 0.875rem;
+    padding: 1.25rem 1.35rem;
+    font-weight: 600;
+    color: #312e81;
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card-link:hover {
+    transform: translateY(-2px);
+    border-color: rgba(129, 140, 248, 0.5);
+    box-shadow: 0 8px 28px rgba(79, 70, 229, 0.15);
+}
+
+/* Buttons */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--brand-indigo) 0%, var(--brand-indigo-dark) 100%);
+    color: #fff;
+    font-weight: 600;
+    padding: 0.65rem 1.35rem;
+    border-radius: 0.625rem;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.45);
+}
+
+.btn-primary.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
+    border-radius: 0.5rem;
+}
+
+/* Form fields (Django widgets) */
+.form-control,
+input.form-control,
+textarea.form-control,
+select.form-control {
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.5rem;
+    padding: 0.625rem 0.875rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    background: #fff;
+    color: #0f172a;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--brand-indigo);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+textarea.form-control {
+    min-height: 8rem;
+    resize: vertical;
+}
+
+.input-checkbox {
+    width: 1.125rem;
+    height: 1.125rem;
+    accent-color: var(--brand-indigo);
+    flex-shrink: 0;
+}
+
+/* Responsive 16:9 embed wrapper */
+.embed-responsive {
+    position: relative;
+    width: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: #0f172a;
+}
+
+.embed-responsive--16x9 {
+    aspect-ratio: 16 / 9;
+}
+
+.embed-responsive iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* WhatsApp float */
+.whatsapp-float {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 50;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: #fff;
+    padding: 0.75rem 1.1rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    box-shadow: 0 8px 28px rgba(34, 197, 94, 0.45);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 36px rgba(34, 197, 94, 0.5);
+}
+
+/* Nav link hover */
+.nav-link {
+    position: relative;
+    color: #475569;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: var(--brand-indigo);
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--brand-indigo), var(--brand-sky));
+    border-radius: 2px;
+    transition: width 0.2s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}

@@ -1,0 +1,29 @@
+<footer class="relative mt-16 sm:mt-20 text-slate-200 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900"></div>
+    <div class="absolute inset-0 pointer-events-none bg-cover bg-center opacity-25 mix-blend-overlay" style="background-image: url('https://images.unsplash.com/photo-1507692049640-349dea580c3d?auto=format&fit=crop&w=1200&q=60');"></div>
+    <div class="relative layout-container layout-section grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="min-w-0">
+            <p class="font-display font-semibold text-lg text-white mb-3">{{ church_info.name|default:"Immanuel Gospel Ministries" }}</p>
+            <p class="text-sm text-slate-300 leading-relaxed">{{ church_info.location|default:"Megga, Nderi, Sigona Ward (Sauri)" }}</p>
+        </div>
+        <div class="min-w-0">
+            <h3 class="font-semibold text-white mb-3">Service Times</h3>
+            <p class="text-sm text-slate-300">Wednesday: 3:00 PM – 6:00 PM</p>
+            <p class="text-sm text-slate-300">Sunday: 10:00 AM – 1:30 PM</p>
+        </div>
+        <div class="min-w-0 sm:col-span-2 lg:col-span-1">
+            <h3 class="font-semibold text-white mb-3">Connect</h3>
+            <p class="text-sm flex flex-wrap gap-x-2 gap-y-1 items-center">
+                {% for link in social_links %}
+                    <a href="{{ link.url }}" class="text-sky-300 hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">{{ link.label }}</a>
+                    {% if not forloop.last %}<span class="text-slate-500">·</span>{% endif %}
+                {% empty %}
+                    <span class="text-slate-400 text-xs">Add social links in Admin → Social links.</span>
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+    <div class="relative border-t border-white/10 py-4 text-center text-xs text-slate-400 px-4">
+        © {% now "Y" %} {{ church_info.name|default:"Immanuel Gospel Ministries" }}. All rights reserved.
+    </div>
+</footer>

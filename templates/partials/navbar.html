@@ -1,0 +1,30 @@
+<nav class="sticky top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur-md shadow-sm" x-data="{ open: false }">
+    <div class="layout-container flex flex-wrap items-center justify-between gap-3 py-3">
+        <a href="{% url 'core:home' %}" class="font-display font-bold text-base sm:text-lg bg-gradient-to-r from-indigo-700 to-sky-600 bg-clip-text text-transparent max-w-[min(100%,16rem)] sm:max-w-none leading-tight">
+            {{ church_info.name|default:"Immanuel Gospel Ministries" }}
+        </a>
+        <button type="button" class="md:hidden shrink-0 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm" @click="open = !open" :aria-expanded="open.toString()" aria-controls="mobile-nav">Menu</button>
+        <div class="hidden md:flex flex-wrap items-center justify-end gap-x-1 gap-y-2 text-sm">
+            <a href="{% url 'core:about' %}" class="nav-link px-2.5 py-2 rounded-lg whitespace-nowrap">About</a>
+            <a href="{% url 'core:services' %}" class="nav-link px-2.5 py-2 rounded-lg whitespace-nowrap">Services</a>
+            <a href="{% url 'events:list' %}" class="nav-link px-2.5 py-2 rounded-lg whitespace-nowrap">Events</a>
+            <a href="{% url 'events:seminars' %}" class="nav-link px-2.5 py-2 rounded-lg whitespace-nowrap">Seminars</a>
+            <a href="{% url 'sermons:list' %}" class="nav-link px-2.5 py-2 rounded-lg whitespace-nowrap">Sermons</a>
+            <a href="{% url 'prayer:request' %}" class="nav-link px-2.5 py-2 rounded-lg whitespace-nowrap">Prayer</a>
+            <a href="{% url 'core:giving' %}" class="nav-link px-2.5 py-2 rounded-lg whitespace-nowrap">Giving</a>
+            <a href="{% url 'communication:contact' %}" class="btn-primary btn-sm ml-1 shrink-0">Contact</a>
+        </div>
+    </div>
+    <div id="mobile-nav" class="md:hidden border-t border-slate-100 bg-white" x-show="open" x-cloak x-transition>
+        <div class="layout-container flex flex-col gap-1 py-4 text-sm">
+            <a href="{% url 'core:about' %}" class="rounded-lg px-3 py-2.5 text-slate-700 hover:bg-slate-50">About</a>
+            <a href="{% url 'core:services' %}" class="rounded-lg px-3 py-2.5 text-slate-700 hover:bg-slate-50">Services</a>
+            <a href="{% url 'events:list' %}" class="rounded-lg px-3 py-2.5 text-slate-700 hover:bg-slate-50">Events</a>
+            <a href="{% url 'events:seminars' %}" class="rounded-lg px-3 py-2.5 text-slate-700 hover:bg-slate-50">Seminars</a>
+            <a href="{% url 'sermons:list' %}" class="rounded-lg px-3 py-2.5 text-slate-700 hover:bg-slate-50">Sermons</a>
+            <a href="{% url 'prayer:request' %}" class="rounded-lg px-3 py-2.5 text-slate-700 hover:bg-slate-50">Prayer</a>
+            <a href="{% url 'core:giving' %}" class="rounded-lg px-3 py-2.5 text-slate-700 hover:bg-slate-50">Giving</a>
+            <a href="{% url 'communication:contact' %}" class="btn-primary btn-sm mt-2 text-center justify-center">Contact</a>
+        </div>
+    </div>
+</nav>

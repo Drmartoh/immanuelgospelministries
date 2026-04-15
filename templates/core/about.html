@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}About | Immanuel Gospel Ministries{% endblock %}
+{% block content %}
+<section class="page-hero page-hero--about">
+    <div class="layout-container page-hero__inner">
+        <p class="page-hero__eyebrow">Our story</p>
+        <h1 class="page-hero__title font-display">About Us</h1>
+        <p class="page-hero__subtitle">Mission, vision, values, and the heart of our ministry in Megga, Nderi.</p>
+    </div>
+</section>
+
+<section class="section-mesh">
+    <div class="layout-container layout-section">
+        <div class="glass-card p-6 sm:p-10 mb-8" data-aos="fade-up">
+            <h2 class="font-display text-xl font-semibold text-indigo-900 mb-3">Church History</h2>
+            {% if history %}
+                <p class="text-slate-700 leading-relaxed">{{ history.content }}</p>
+            {% else %}
+                <p class="text-slate-600">Church history will appear here once it is published in the admin dashboard.</p>
+            {% endif %}
+        </div>
+        <div class="grid gap-6 md:grid-cols-2 mb-10">
+            <div class="card-elevated p-6 sm:p-8" data-aos="fade-up" data-aos-delay="50">
+                <h3 class="font-display font-semibold text-indigo-800 mb-3">Mission</h3>
+                <p class="text-slate-600 leading-relaxed">{{ info.mission }}</p>
+            </div>
+            <div class="card-elevated p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
+                <h3 class="font-display font-semibold text-indigo-800 mb-3">Vision</h3>
+                <p class="text-slate-600 leading-relaxed">{{ info.vision }}</p>
+            </div>
+        </div>
+        <h2 class="font-display text-2xl font-semibold text-slate-900 mb-6">Core Values</h2>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-10">
+            {% for value in values %}
+                <div class="card-elevated border-t-4 border-indigo-500 p-5 sm:p-6" data-aos="fade-up">
+                    <p class="font-semibold text-indigo-700 text-lg">{{ value.title }}</p>
+                    <p class="text-sm text-slate-600 mt-2 leading-relaxed">{{ value.description }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="section-mesh-dark rounded-2xl p-6 sm:p-10 shadow-xl" data-aos="fade-up">
+            <h2 class="font-display text-xl font-semibold text-white mb-3">{{ info.reverend_name }}</h2>
+            <p class="text-slate-300 leading-relaxed">{{ info.reverend_bio }}</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

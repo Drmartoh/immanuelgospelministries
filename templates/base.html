@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Immanuel Gospel Ministries{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
+                        display: ['Fraunces', 'Georgia', 'serif'],
+                    },
+                },
+            },
+        };
+    </script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="page-surface min-h-screen text-slate-800 antialiased font-sans overflow-x-hidden">
+    {% include "partials/navbar.html" %}
+    <main class="min-h-0 w-full overflow-x-hidden">
+        {% if messages %}
+            <div class="layout-container pt-4">
+                {% for message in messages %}
+                    <div class="p-4 rounded-xl border border-emerald-200/80 bg-emerald-50/90 text-emerald-900 shadow-sm mb-2">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+    {% include "partials/footer.html" %}
+    <a href="https://wa.me/{% if church_info %}{{ church_info.whatsapp_phone|default:'254700000000' }}{% else %}254700000000{% endif %}" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">WhatsApp</a>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

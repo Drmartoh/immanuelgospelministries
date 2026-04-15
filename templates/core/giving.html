@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Giving &amp; Donors | Immanuel Gospel Ministries{% endblock %}
+{% block content %}
+<section class="page-hero page-hero--giving">
+    <div class="layout-container page-hero__inner">
+        <p class="page-hero__eyebrow">Generosity</p>
+        <h1 class="page-hero__title font-display">Giving &amp; Donations</h1>
+        <p class="page-hero__subtitle">Financial giving through M-Pesa and in-kind gifts that bless families in our community. Thank you for partnering with the ministry.</p>
+    </div>
+</section>
+
+<section class="section-mesh">
+    <div class="layout-container layout-section">
+        <h2 class="font-display text-2xl font-semibold text-slate-900 sm:text-3xl">Financial giving</h2>
+        <p class="mt-2 max-w-2xl text-slate-600">Numbers below are edited in <strong>Admin → Church information</strong> (M-Pesa &amp; WhatsApp section).</p>
+        <div class="mt-8 grid gap-6 md:grid-cols-2">
+            <div class="card-elevated bg-gradient-to-br from-white via-indigo-50/40 to-white p-6 sm:p-8" data-aos="fade-up">
+                <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-600 font-display text-lg font-bold text-white">P</div>
+                <h3 class="font-display font-semibold text-xl text-slate-900 mb-3">M-Pesa Paybill</h3>
+                <p class="text-slate-600"><span class="font-medium text-slate-800">Business Number:</span> {% if church_info %}{{ church_info.mpesa_paybill|default:"—" }}{% else %}—{% endif %}</p>
+                <p class="text-slate-600 mt-1"><span class="font-medium text-slate-800">Account:</span> {% if church_info %}{{ church_info.mpesa_paybill_account|default:"—" }}{% else %}—{% endif %}</p>
+            </div>
+            <div class="card-elevated bg-gradient-to-br from-white via-sky-50/50 to-white p-6 sm:p-8" data-aos="fade-up" data-aos-delay="80">
+                <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-600 font-display text-lg font-bold text-white">T</div>
+                <h3 class="font-display font-semibold text-xl text-slate-900 mb-3">M-Pesa Till Number</h3>
+                <p class="text-slate-600"><span class="font-medium text-slate-800">Till Number:</span> {% if church_info %}{{ church_info.mpesa_till|default:"—" }}{% else %}—{% endif %}</p>
+                <p class="text-slate-600 mt-2">Use your name as reference unless the church specifies otherwise in Church information.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="in-kind-donations" class="relative scroll-mt-24 overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-50/60 via-white to-rose-50/40"></div>
+    <div class="relative layout-container layout-section">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+                <h2 class="font-display text-2xl font-semibold text-slate-900 sm:text-3xl">In-kind donations for donors</h2>
+                <p class="mt-2 max-w-2xl text-slate-600">We gratefully receive clean, usable items for children and adults. Edit the list below anytime in <strong>Admin → Accepted in-kind donations</strong>.</p>
+            </div>
+            <a href="{% url 'communication:contact' %}" class="btn-primary shrink-0 self-start lg:self-auto">Contact us to arrange drop-off</a>
+        </div>
+        <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {% for item in accepted_donations %}
+                <div class="card-elevated p-6" data-aos="fade-up">
+                    <p class="text-xs font-semibold uppercase tracking-wide text-indigo-600">{{ item.get_category_display }}</p>
+                    <h3 class="font-display mt-2 text-lg font-semibold text-slate-900">{{ item.headline }}</h3>
+                    {% if item.details %}
+                        <p class="mt-2 text-sm text-slate-600 leading-relaxed">{{ item.details }}</p>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <div class="glass-card col-span-full p-8 text-center text-slate-600 sm:col-span-2 lg:col-span-3">
+                    <p>No in-kind categories are published yet. Add or publish entries under <strong>Admin → Accepted in-kind donations</strong>.</p>
+                </div>
+            {% endfor %}
+        </div>
+        <p class="mt-10 max-w-3xl rounded-xl border border-amber-200/80 bg-amber-50/80 p-4 text-sm text-amber-950">
+            <strong>Note:</strong> Please ensure clothing and shoes are clean and in good repair. For toys, include only age-appropriate items with no missing small parts where safety is a concern. When in doubt, contact the church office first.
+        </p>
+    </div>
+</section>
+{% endblock %}

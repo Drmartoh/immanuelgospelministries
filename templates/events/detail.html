@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ event.title }} | Event{% endblock %}
+{% block content %}
+<section class="page-hero page-hero--events">
+    <div class="layout-container page-hero__inner">
+        <p class="page-hero__eyebrow">{% if event.kind == "seminar_training" %}Seminar &amp; training{% else %}Event{% endif %}</p>
+        <h1 class="page-hero__title font-display max-w-4xl">{{ event.title }}</h1>
+        <p class="page-hero__subtitle">
+            {{ event.date }} · {{ event.location }}
+            {% if event.training_focus %}
+                <span class="mt-2 block text-base font-medium text-indigo-100">Focus: {{ event.training_focus }}</span>
+            {% endif %}
+        </p>
+    </div>
+</section>
+
+<section class="section-mesh">
+    <div class="layout-container layout-section">
+        <article class="card-elevated mx-auto max-w-3xl overflow-hidden shadow-lg">
+            <div class="aspect-[21/9] sm:aspect-[2/1] w-full overflow-hidden bg-slate-200">
+                <img src="{{ event.image_url }}" alt="{{ event.title }}" class="h-full w-full object-cover" loading="eager">
+            </div>
+            <div class="p-6 sm:p-10">
+                <p class="text-slate-700 leading-relaxed whitespace-pre-line">{{ event.description }}</p>
+            </div>
+        </article>
+    </div>
+</section>
+{% endblock %}

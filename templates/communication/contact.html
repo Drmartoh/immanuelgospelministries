@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Contact | Immanuel Gospel Ministries{% endblock %}
+{% block content %}
+<section class="page-hero page-hero--contact">
+    <div class="layout-container page-hero__inner">
+        <p class="page-hero__eyebrow">Reach out</p>
+        <h1 class="page-hero__title font-display">Contact Us</h1>
+        <p class="page-hero__subtitle">Visit us in Megga, Nderi, Sigona Ward — or send a message below.</p>
+    </div>
+</section>
+
+<section class="relative">
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-indigo-50/50 via-transparent to-slate-100/40"></div>
+    <div class="relative layout-container layout-section">
+        <div class="grid gap-10 lg:grid-cols-2 lg:gap-12 lg:items-start">
+            <div class="space-y-6 min-w-0" data-aos="fade-up">
+                <div class="glass-card p-6">
+                    <h2 class="font-display font-semibold text-lg text-slate-900 mb-3">Visit</h2>
+                    <p class="text-sm text-slate-600 leading-relaxed">Megga, Nderi, Sigona Ward (Sauri)</p>
+                    <p class="text-sm text-slate-600 mt-2">Reverend: Rev. Samuel Muhindi Mwaura</p>
+                </div>
+                <div class="card-elevated overflow-hidden rounded-xl">
+                    <iframe class="block h-64 w-full border-0 sm:h-80" src="https://maps.google.com/maps?q=Sigona%20Ward%20Sauri&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed" title="Church location" loading="lazy"></iframe>
+                </div>
+            </div>
+            <form method="post" class="glass-card space-y-5 p-6 sm:p-10 min-w-0" data-aos="fade-up" data-aos-delay="80">
+                {% csrf_token %}
+                <div>
+                    <label class="mb-1 block text-sm font-medium text-slate-700" for="{{ form.name.id_for_label }}">Name</label>
+                    {{ form.name }}
+                </div>
+                <div>
+                    <label class="mb-1 block text-sm font-medium text-slate-700" for="{{ form.email.id_for_label }}">Email</label>
+                    {{ form.email }}
+                </div>
+                <div>
+                    <label class="mb-1 block text-sm font-medium text-slate-700" for="{{ form.message.id_for_label }}">Message</label>
+                    {{ form.message }}
+                </div>
+                <button class="btn-primary" type="submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+{% load igm_admin %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="{% static 'admin/css/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'css/igm_admin_dashboard.css' %}">
+{% endblock %}
+
+{% block coltype %}colM{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard igm-admin-dashboard-page{% endblock %}
+
+{% block nav-breadcrumbs %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block content %}
+<div id="content-main" class="igm-admin-index-wrap">
+    {% igm_admin_dashboard %}
+</div>
+{% endblock %}
+
+{% block sidebar %}{% endblock %}

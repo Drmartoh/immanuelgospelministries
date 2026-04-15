@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Seminars &amp; Training | Immanuel Gospel Ministries{% endblock %}
+{% block content %}
+<section class="page-hero page-hero--events">
+    <div class="layout-container page-hero__inner">
+        <p class="page-hero__eyebrow">Skills &amp; empowerment</p>
+        <h1 class="page-hero__title font-display">Seminars &amp; Training</h1>
+        <p class="page-hero__subtitle">Entrepreneurship, empowerment, and practical life skills — mark events as “Seminar &amp; skills training” in admin, or include “seminar” in the title.</p>
+    </div>
+</section>
+
+<section class="relative">
+    <div class="pointer-events-none absolute inset-0 h-40 bg-gradient-to-b from-slate-100/60 to-transparent"></div>
+    <div class="relative layout-container layout-section">
+        <p class="mb-8 max-w-2xl text-slate-600">
+            <a href="{% url 'events:list' %}" class="font-semibold text-indigo-600 hover:text-indigo-800">← All events</a>
+        </p>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {% for event in seminars %}
+                <a href="{% url 'events:detail' event.pk %}" class="group card-elevated block overflow-hidden" data-aos="fade-up">
+                    <div class="relative aspect-[16/10] overflow-hidden">
+                        <img src="{{ event.image_url }}" alt="{{ event.title }}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                        <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/75 to-transparent opacity-90"></div>
+                        {% if event.training_focus %}
+                            <span class="absolute left-3 top-3 rounded-full bg-indigo-600/95 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">{{ event.training_focus }}</span>
+                        {% endif %}
+                        <span class="absolute bottom-3 left-3 rounded-md bg-black/35 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm">{{ event.date|date:"M j, Y" }}</span>
+                    </div>
+                    <div class="p-5">
+                        <h2 class="font-display font-semibold text-slate-900 leading-snug group-hover:text-indigo-700 transition-colors">{{ event.title }}</h2>
+                        <p class="mt-1 text-sm text-slate-500">{{ event.location }}</p>
+                    </div>
+                </a>
+            {% empty %}
+                <div class="glass-card col-span-full p-10 text-center text-slate-600 sm:col-span-2 lg:col-span-3">
+                    <p class="mb-2">No seminars or training sessions are listed yet.</p>
+                    <p class="text-sm">In admin, create an event and set <strong>Kind</strong> to “Seminar &amp; skills training”, and add a short <strong>Training focus</strong> (e.g. Entrepreneurship).</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

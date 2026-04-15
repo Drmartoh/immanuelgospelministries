@@ -1,0 +1,78 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block title %}{% if form.errors %}{% translate "Error:" %} {% endif %}{{ block.super }}{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="{% static 'admin/css/login.css' %}">
+<link rel="stylesheet" href="{% static 'css/igm_admin_login.css' %}">
+{{ form.media }}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} login igm-admin-login{% endblock %}
+
+{% block usertools %}{% endblock %}
+{% block nav-global %}{% endblock %}
+{% block nav-sidebar %}{% endblock %}
+{% block content_title %}{% endblock %}
+{% block nav-breadcrumbs %}{% endblock %}
+
+{% block content %}
+<div class="igm-login-page">
+    <div class="igm-login-page__bg" aria-hidden="true"></div>
+    <div class="igm-login-page__panel">
+        <div class="igm-login-page__brand">
+            <span class="igm-login-page__icon"><i class="fa-solid fa-church"></i></span>
+            <div>
+                <h1 class="igm-login-page__title">Immanuel Gospel Ministries</h1>
+                <p class="igm-login-page__subtitle">Administrator sign-in</p>
+            </div>
+        </div>
+
+        {% if form.errors and not form.non_field_errors %}
+            <p class="igm-login-page__errornote">
+                {% blocktranslate count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktranslate %}
+            </p>
+        {% endif %}
+
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <p class="igm-login-page__errornote">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            <p class="igm-login-page__errornote">
+                {% blocktranslate trimmed %}
+                    You are authenticated as {{ username }}, but are not authorized to access this page.
+                {% endblocktranslate %}
+            </p>
+        {% endif %}
+
+        <form action="{{ app_path }}" method="post" id="login-form" class="igm-login-form">
+            {% csrf_token %}
+            <div class="igm-login-form__row">
+                {{ form.username.errors }}
+                <label for="id_username" class="igm-login-form__label"><i class="fa-solid fa-user"></i> {{ form.username.label }}</label>
+                {{ form.username }}
+            </div>
+            <div class="igm-login-form__row">
+                {{ form.password.errors }}
+                <label for="id_password" class="igm-login-form__label"><i class="fa-solid fa-lock"></i> {{ form.password.label }}</label>
+                {{ form.password }}
+                <input type="hidden" name="next" value="{{ next }}">
+            </div>
+            {% url 'admin_password_reset' as password_reset_url %}
+            {% if password_reset_url %}
+                <div class="igm-login-form__meta">
+                    <a href="{{ password_reset_url }}">{% translate "Forgotten your login credentials?" %}</a>
+                </div>
+            {% endif %}
+            <div class="igm-login-form__submit">
+                <button type="submit" class="igm-login-form__btn"><i class="fa-solid fa-right-to-bracket"></i> {% translate "Log in" %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Prayer Request | Immanuel Gospel Ministries{% endblock %}
+{% block content %}
+<section class="page-hero page-hero--prayer">
+    <div class="layout-container page-hero__inner">
+        <p class="page-hero__eyebrow">Intercession</p>
+        <h1 class="page-hero__title font-display">Prayer Request</h1>
+        <p class="page-hero__subtitle">Share your request with the church family. You may remain anonymous or mark your request private.</p>
+    </div>
+</section>
+
+<section class="section-mesh">
+    <div class="layout-container layout-section">
+        <form method="post" class="glass-card mx-auto max-w-xl space-y-5 p-6 sm:p-10 shadow-xl">
+            {% csrf_token %}
+            <div>
+                <label class="mb-1 block text-sm font-medium text-slate-700" for="{{ form.name.id_for_label }}">Name (optional)</label>
+                {{ form.name }}
+            </div>
+            <div>
+                <label class="mb-1 block text-sm font-medium text-slate-700" for="{{ form.request.id_for_label }}">Request</label>
+                {{ form.request }}
+            </div>
+            <div class="flex items-start gap-3">
+                {{ form.is_private }}
+                <label class="text-sm text-slate-700 leading-snug" for="{{ form.is_private.id_for_label }}">Mark as private</label>
+            </div>
+            <button class="btn-primary w-full justify-center sm:w-auto" type="submit">Submit Request</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

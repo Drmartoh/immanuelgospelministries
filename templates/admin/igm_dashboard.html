@@ -1,0 +1,187 @@
+{% load i18n igm_admin %}
+<div class="igm-dashboard" id="igm-dashboard-root">
+    <header class="igm-hero">
+        <div class="igm-hero__bg" aria-hidden="true"></div>
+        <div class="igm-hero__inner">
+            <div class="igm-hero__brand">
+                <div class="igm-hero__logo-wrap" aria-hidden="true">
+                    <i class="fa-solid fa-church fa-2x"></i>
+                </div>
+                <div>
+                    <p class="igm-hero__eyebrow"><i class="fa-solid fa-gauge-high"></i> Control centre</p>
+                    <h1 class="igm-hero__title">Immanuel Gospel Ministries</h1>
+                    <p class="igm-hero__subtitle">This is your control centre at <code class="igm-hero__code">/admin/dashboard/</code> — every app and model is below (same as Django admin). Use <strong>Publish</strong> flags so visitors only see what you intend.</p>
+                    <div class="igm-hero__actions">
+                        {% if request %}
+                            <a class="igm-pill igm-pill--light" href="/" target="_blank" rel="noopener">
+                                <i class="fa-solid fa-globe"></i> View public site
+                            </a>
+                            <a class="igm-pill igm-pill--ghost" href="{% url 'admin:password_change' %}">
+                                <i class="fa-solid fa-key"></i> Change password
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% if content_health %}
+                <div class="igm-hero__alert">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span><strong>{{ content_health }}</strong> draft / unpublished items — review publish checkboxes before go-live.</span>
+                </div>
+            {% else %}
+                <div class="igm-hero__ok">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>No draft flags detected on tracked content.</span>
+                </div>
+            {% endif %}
+        </div>
+    </header>
+
+    <section class="igm-stats" aria-label="Quick statistics">
+        {% for t in tiles %}
+            <article class="igm-stat igm-stat--{{ t.color }}">
+                <div class="igm-stat__icon"><i class="fa-solid {{ t.icon }}"></i></div>
+                <div class="igm-stat__body">
+                    <h3 class="igm-stat__label">{{ t.label }}</h3>
+                    <p class="igm-stat__count">{{ t.count }} <span class="muted">live</span></p>
+                    {% if t.draft %}<p class="igm-stat__draft"><i class="fa-regular fa-file"></i> {{ t.draft }} draft</p>{% endif %}
+                    {% if t.extra %}<p class="igm-stat__draft">{{ t.extra }}</p>{% endif %}
+                    <div class="igm-stat__links">
+                        <a href="{{ t.url }}"><i class="fa-solid fa-list"></i> List</a>
+                        {% if t.add %}<a href="{{ t.add }}"><i class="fa-solid fa-plus"></i> Add</a>{% endif %}
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+
+    <div class="igm-layout">
+        <div class="igm-layout__main">
+            <section class="igm-section" aria-labelledby="igm-apps-heading">
+                <div class="igm-section__head">
+                    <h2 id="igm-apps-heading" class="igm-section__title"><i class="fa-solid fa-layer-group"></i> All applications &amp; models</h2>
+                    <p class="igm-section__desc">Same data as the standard Django admin index — organised as cards with quick <strong>Add</strong> / <strong>Change</strong> actions.</p>
+                </div>
+
+                {% if app_list %}
+                    <div class="igm-apps">
+                        {% for app in app_list %}
+                            <article class="igm-app-card app-{{ app.app_label }}">
+                                <header class="igm-app-card__head">
+                                    <span class="igm-app-card__icon"><i class="fa-solid {% igm_app_icon app.app_label %}"></i></span>
+                                    <div>
+                                        {% if app.app_url %}
+                                            <h3 class="igm-app-card__title"><a href="{{ app.app_url }}">{{ app.name }}</a></h3>
+                                        {% else %}
+                                            <h3 class="igm-app-card__title">{{ app.name }}</h3>
+                                        {% endif %}
+                                        <p class="igm-app-card__meta">{{ app.app_label }}</p>
+                                    </div>
+                                </header>
+                                <ul class="igm-model-list">
+                                    {% for model in app.models %}
+                                        {% with mn=model.object_name|lower %}
+                                            <li class="igm-model-row model-{{ app.app_label }}-{{ mn }}">
+                                                <span class="igm-model-row__icon"><i class="fa-solid {% igm_model_icon app.app_label model.object_name %}"></i></span>
+                                                <div class="igm-model-row__main">
+                                                    {% if model.admin_url %}
+                                                        <a class="igm-model-row__name" href="{{ model.admin_url }}">{{ model.name }}</a>
+                                                    {% else %}
+                                                        <span class="igm-model-row__name">{{ model.name }}</span>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="igm-model-row__actions">
+                                                    {% if model.add_url %}
+                                                        <a class="igm-chip igm-chip--add" href="{{ model.add_url }}" title="{% translate 'Add' %}"><i class="fa-solid fa-plus"></i> {% translate "Add" %}</a>
+                                                    {% endif %}
+                                                    {% if model.admin_url %}
+                                                        {% if model.view_only %}
+                                                            <a class="igm-chip" href="{{ model.admin_url }}"><i class="fa-regular fa-eye"></i> {% translate "View" %}</a>
+                                                        {% else %}
+                                                            <a class="igm-chip" href="{{ model.admin_url }}"><i class="fa-solid fa-pen-to-square"></i> {% translate "Change" %}</a>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </div>
+                                            </li>
+                                        {% endwith %}
+                                    {% endfor %}
+                                </ul>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="igm-empty"><i class="fa-solid fa-user-lock"></i> {% translate "You don’t have permission to view or edit anything." %}</p>
+                {% endif %}
+            </section>
+        </div>
+
+        <aside class="igm-layout__aside" aria-label="Shortcuts and activity">
+            <div class="igm-aside-card">
+                <h3 class="igm-aside-card__title"><i class="fa-solid fa-bolt"></i> Shortcuts</h3>
+                <ul class="igm-aside-links">
+                    {% for label, href in quick_links %}
+                        <li><a href="{{ href }}"><i class="fa-solid fa-chevron-right"></i> {{ label }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% if unpublished_slides or unpublished_services %}
+                    <p class="igm-aside-note">
+                        {% if unpublished_slides %}<i class="fa-solid fa-images"></i> {{ unpublished_slides }} slide(s) unpublished.<br>{% endif %}
+                        {% if unpublished_services %}<i class="fa-solid fa-clock"></i> {{ unpublished_services }} service row(s) unpublished.{% endif %}
+                    </p>
+                {% endif %}
+            </div>
+
+            <div class="igm-aside-card">
+                <h3 class="igm-aside-card__title"><i class="fa-solid fa-clock-rotate-left"></i> {% translate "Recent actions" %}</h3>
+                <h4 class="igm-aside-card__subtitle">{% translate "My actions" %}</h4>
+                {% if not admin_log %}
+                    <p class="muted">{% translate "None available" %}</p>
+                {% else %}
+                    <ul class="igm-action-list">
+                        {% for entry in admin_log %}
+                            <li class="igm-action-list__item {% if entry.is_addition %}is-add{% elif entry.is_change %}is-change{% elif entry.is_deletion %}is-del{% endif %}">
+                                {% if entry.is_deletion or not entry.get_admin_url %}
+                                    <span>{{ entry.object_repr }}</span>
+                                {% else %}
+                                    <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+                                {% endif %}
+                                <span class="quiet">{% if entry.content_type %}{{ entry.content_type.name }}{% endif %}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="igm-aside-card">
+                <h3 class="igm-aside-card__title"><i class="fa-solid fa-clock"></i> Latest records</h3>
+                <h4 class="igm-aside-card__subtitle">Events</h4>
+                <ul class="igm-mini-list">
+                    {% for e in recent_events %}
+                        <li><a href="{% url 'admin:events_event_change' e.pk %}">{{ e.title }}</a><span class="quiet">{% if e.is_published %}<i class="fa-solid fa-eye igm-ok"></i>{% else %}<i class="fa-solid fa-eye-slash igm-warn"></i>{% endif %} {{ e.date|date:"M j" }}</span></li>
+                    {% empty %}<li class="quiet">—</li>{% endfor %}
+                </ul>
+                <h4 class="igm-aside-card__subtitle">Sermons</h4>
+                <ul class="igm-mini-list">
+                    {% for s in recent_sermons %}
+                        <li><a href="{% url 'admin:sermons_sermon_change' s.pk %}">{{ s.title }}</a><span class="quiet">{% if s.is_published %}<i class="fa-solid fa-eye igm-ok"></i>{% else %}<i class="fa-solid fa-eye-slash igm-warn"></i>{% endif %}</span></li>
+                    {% empty %}<li class="quiet">—</li>{% endfor %}
+                </ul>
+                <h4 class="igm-aside-card__subtitle">Messages</h4>
+                <ul class="igm-mini-list">
+                    {% for m in recent_messages %}
+                        <li><a href="{% url 'admin:communication_contactmessage_change' m.pk %}">{{ m.name }}</a><span class="quiet">{{ m.created_at }}</span></li>
+                    {% empty %}<li class="quiet">—</li>{% endfor %}
+                </ul>
+                <h4 class="igm-aside-card__subtitle">Prayer</h4>
+                {% if prayer_private %}
+                    <p class="igm-aside-note"><i class="fa-solid fa-lock"></i> {{ prayer_private }} private request(s) open.</p>
+                {% endif %}
+                <ul class="igm-mini-list">
+                    {% for p in recent_prayers %}
+                        <li><a href="{% url 'admin:prayer_prayerrequest_change' p.pk %}">{{ p.name|default:"Anonymous" }}</a><span class="quiet">{{ p.created_at }}</span></li>
+                    {% empty %}<li class="quiet">—</li>{% endfor %}
+                </ul>
+            </div>
+        </aside>
+    </div>
+</div>
