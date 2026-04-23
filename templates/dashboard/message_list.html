@@ -1,0 +1,31 @@
+{% extends "dashboard/base.html" %}
+{% block page_title %}{{ section_title }}{% endblock %}
+{% block content %}
+<div class="dash-table-wrap">
+    <table class="dash-table">
+        <thead>
+            <tr>
+                <th>From</th>
+                <th>Date</th>
+                <th>Preview</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for m in items %}
+            <tr>
+                <td>
+                    <strong>{{ m.name }}</strong><br>
+                    <span class="text-xs text-slate-500">{{ m.email }}</span>
+                </td>
+                <td class="text-sm">{{ m.created_at|date:"M j, Y" }}</td>
+                <td class="text-sm text-slate-600">{{ m.message|truncatewords:12 }}</td>
+                <td><a href="{% url 'dashboard:message_detail' m.pk %}" class="text-indigo-600 text-sm font-semibold">Open</a></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" class="text-slate-500">No messages yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

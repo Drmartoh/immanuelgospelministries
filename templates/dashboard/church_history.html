@@ -1,0 +1,18 @@
+{% extends "dashboard/base.html" %}
+{% block page_title %}{{ section_title }}{% endblock %}
+{% block content %}
+<p class="text-sm text-slate-600">Shown on the About page when “published” is on.</p>
+<form method="post" class="dash-form-card" style="max-width: 52rem;">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="form-row">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {{ field.errors }}
+        </div>
+    {% endfor %}
+    <div class="dash-actions" style="margin-top:0;">
+        <button type="submit" class="dash-btn dash-btn--primary">Save</button>
+    </div>
+</form>
+{% endblock %}

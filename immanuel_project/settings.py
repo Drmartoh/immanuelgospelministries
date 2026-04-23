@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     "sermons",
     "prayer",
     "communication",
+    "dashboard",
 ]
 
 MIDDLEWARE = [
@@ -94,6 +95,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-LOGIN_URL = "/admin/login/"
+LOGIN_URL = "/manage/login/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

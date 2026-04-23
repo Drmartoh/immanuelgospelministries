@@ -6,6 +6,7 @@ from django.urls import include, path
 from immanuel_project.admin_views import admin_control_center
 
 urlpatterns = [
+    path("manage/", include("dashboard.urls")),
     path(
         "admin/dashboard/",
         admin.site.admin_view(admin_control_center),

@@ -1,0 +1,379 @@
+/* Staff control panel at /manage/ — clear, calm, scannable */
+
+.dash-app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(165deg, #f8fafc 0%, #e2e8f0 45%, #f1f5f9 100%);
+    color: #0f172a;
+}
+
+.dash-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.95);
+    box-shadow: 0 1px 12px rgba(15, 23, 42, 0.06);
+}
+
+.dash-body {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+.dash-nav {
+    width: 16.5rem;
+    flex-shrink: 0;
+    background: #1e1b4b;
+    color: #e2e8f0;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.dash-nav__brand {
+    padding: 0.25rem 1rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 0.5rem;
+}
+
+.dash-nav__eyebrow {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #a5b4fc;
+    font-weight: 600;
+}
+
+.dash-nav__title {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+    margin: 0.25rem 0 0;
+}
+
+.dash-nav a {
+    display: block;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.875rem;
+    color: #cbd5e1;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.dash-nav a:hover {
+    background: rgba(99, 102, 241, 0.2);
+    color: #fff;
+}
+
+.dash-nav a.dash-nav__active {
+    background: rgba(99, 102, 241, 0.28);
+    color: #fff;
+    border-left-color: #a5b4fc;
+    font-weight: 600;
+}
+
+.dash-nav__section {
+    margin-top: 0.75rem;
+    padding: 0.4rem 1.25rem 0.2rem;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.dash-main {
+    flex: 1;
+    min-width: 0;
+    padding: 1.5rem 1.25rem 2.5rem;
+}
+
+.dash-page-title {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.5rem;
+}
+
+.dash-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
+    gap: 0.9rem;
+    margin-top: 1.25rem;
+}
+
+.dash-stat {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.875rem;
+    padding: 1rem 1.1rem;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
+}
+
+.dash-stat__value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #312e81;
+    line-height: 1.2;
+}
+
+.dash-stat__label {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 0.2rem;
+}
+
+.dash-table-wrap {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.875rem;
+    overflow: auto;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
+    margin-top: 1.25rem;
+}
+
+.dash-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.dash-table th,
+.dash-table td {
+    padding: 0.7rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: top;
+}
+
+.dash-table th {
+    background: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.dash-table tr:last-child td {
+    border-bottom: 0;
+}
+
+.dash-form-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.875rem;
+    padding: 1.25rem 1.35rem 1.5rem;
+    max-width: 44rem;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
+    margin-top: 1.25rem;
+}
+
+.dash-form-card .form-row,
+.dash-form-card p {
+    margin-bottom: 1rem;
+}
+
+.dash-form-card label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.3rem;
+}
+
+.dash-form-card input,
+.dash-form-card select,
+.dash-form-card textarea {
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+}
+
+.dash-form-card textarea {
+    min-height: 5rem;
+}
+
+.dash-form-card .errorlist {
+    list-style: none;
+    margin: 0.35rem 0 0;
+    padding: 0;
+    font-size: 0.8rem;
+    color: #b91c1c;
+}
+
+.dash-form-card .helptext {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+.dash-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 0;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.dash-btn--primary {
+    background: linear-gradient(135deg, #4f46e5, #3730a3);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35);
+}
+
+.dash-btn--primary:hover {
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.45);
+}
+
+.dash-btn--secondary {
+    background: #f1f5f9;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+}
+
+.dash-btn--danger {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.dash-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 1.25rem;
+}
+
+.dash-badge {
+    display: inline-block;
+    padding: 0.2rem 0.55rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    background: #ede9fe;
+    color: #5b21b6;
+}
+
+.dash-messages {
+    margin-bottom: 1rem;
+}
+
+.dash-messages .msg {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.dash-messages .msg--success {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+}
+
+.dash-messages .msg--error {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.dash-messages .msg--info {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+}
+
+.dash-home-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    gap: 0.9rem;
+    margin-top: 1.5rem;
+}
+
+.dash-tile {
+    display: block;
+    padding: 1.1rem 1.15rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.875rem;
+    text-decoration: none;
+    color: #0f172a;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dash-tile:hover {
+    border-color: #a5b4fc;
+    box-shadow: 0 4px 18px rgba(79, 70, 229, 0.12);
+}
+
+.dash-tile h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0 0 0.35rem;
+    color: #1e1b4b;
+}
+
+.dash-tile p {
+    margin: 0;
+    font-size: 0.78rem;
+    color: #64748b;
+    line-height: 1.45;
+}
+
+@media (max-width: 900px) {
+    .dash-body {
+        flex-direction: column;
+    }
+
+    .dash-nav {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .dash-nav__brand {
+        width: 100%;
+        border-bottom: 0;
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .dash-nav a {
+        padding: 0.45rem 0.9rem;
+        border-radius: 0.4rem;
+        border-left: 0;
+    }
+
+    .dash-nav__section {
+        width: 100%;
+    }
+}

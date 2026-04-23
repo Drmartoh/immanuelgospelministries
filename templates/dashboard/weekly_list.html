@@ -1,0 +1,39 @@
+{% extends "dashboard/base.html" %}
+{% block page_title %}{{ section_title }}{% endblock %}
+{% block content %}
+<div class="dash-actions">
+    <a href="{% url 'dashboard:weekly_add' %}" class="dash-btn dash-btn--primary">Add row</a>
+</div>
+<div class="dash-table-wrap">
+    <table class="dash-table">
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>What</th>
+                <th>Time</th>
+                <th>Order</th>
+                <th>Pub.</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in items %}
+            <tr>
+                <td>{{ s.day_label }}</td>
+                <td>{{ s.name }}</td>
+                <td>{{ s.time_label }}</td>
+                <td>{{ s.sort_order }}</td>
+                <td>{% if s.is_published %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <a href="{% url 'dashboard:weekly_edit' s.pk %}" class="text-indigo-600 text-sm font-semibold">Edit</a>
+                    &nbsp;·&nbsp;
+                    <a href="{% url 'dashboard:weekly_delete' s.pk %}" class="text-rose-600 text-sm">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" class="text-slate-500">No rows — default times from code will show. Add your own times here to override.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "dashboard/base.html" %}
+{% block page_title %}{{ section_title }}{% endblock %}
+{% block content %}
+<div class="dash-actions">
+    <a href="{% url 'dashboard:event_add' %}" class="dash-btn dash-btn--primary">Add event</a>
+</div>
+<div class="dash-table-wrap">
+    <table class="dash-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>When</th>
+                <th>Location</th>
+                <th>Pub.</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for e in items %}
+            <tr>
+                <td><strong>{{ e.title }}</strong><br><span class="text-xs text-slate-500">{{ e.get_kind_display }}</span></td>
+                <td>{{ e.date|date:"M j, Y g:i a" }}</td>
+                <td>{{ e.location|truncatewords:6 }}</td>
+                <td>{% if e.is_published %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <a href="{% url 'dashboard:event_edit' e.pk %}" class="text-indigo-600 text-sm font-semibold">Edit</a>
+                    &nbsp;·&nbsp;
+                    <a href="{% url 'dashboard:event_delete' e.pk %}" class="text-rose-600 text-sm">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" class="text-slate-500">No events yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

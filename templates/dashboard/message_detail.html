@@ -1,0 +1,13 @@
+{% extends "dashboard/base.html" %}
+{% block page_title %}{{ section_title }}{% endblock %}
+{% block content %}
+<div class="dash-form-card" style="max-width: 40rem;">
+    <p class="text-sm text-slate-500 mb-1">{{ item.created_at|date:"M j, Y g:i a" }}</p>
+    <h2 class="text-lg font-bold text-slate-900 m-0">{{ item.name }} &lt;{{ item.email }}&gt;</h2>
+    <div class="mt-4 p-4 rounded-lg bg-slate-50 border border-slate-200 text-slate-800 text-sm whitespace-pre-wrap">{{ item.message }}</div>
+    <div class="dash-actions" style="margin-top:1.25rem;">
+        <a href="mailto:{{ item.email }}?subject=Re%3A%20Immanuel%20Gospel%20Ministries" class="dash-btn dash-btn--primary">Reply by email</a>
+        <a href="{% url 'dashboard:message_list' %}" class="dash-btn dash-btn--secondary">All messages</a>
+    </div>
+</div>
+{% endblock %}

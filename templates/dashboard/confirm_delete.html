@@ -1,0 +1,10 @@
+{% extends "dashboard/base.html" %}
+{% block page_title %}{{ section_title }}{% endblock %}
+{% block content %}
+<p class="text-sm text-slate-600">Are you sure you want to remove <strong>{{ object }}</strong>?</p>
+<form method="post" class="dash-actions" style="margin-top:1rem;">
+    {% csrf_token %}
+    <button type="submit" class="dash-btn dash-btn--danger">Yes, remove</button>
+    <a href="{% url cancel_url %}" class="dash-btn dash-btn--secondary">Cancel</a>
+</form>
+{% endblock %}

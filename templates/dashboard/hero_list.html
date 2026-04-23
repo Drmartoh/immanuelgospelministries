@@ -1,0 +1,36 @@
+{% extends "dashboard/base.html" %}
+{% block page_title %}{{ section_title }}{% endblock %}
+{% block content %}
+<p class="text-sm text-slate-600">Optional — the public home page can use a fixed set of images in code, or you can add slides here for future use. Each slide needs an image <strong>URL</strong> (e.g. from your hosting or a CDN).</p>
+<div class="dash-actions">
+    <a href="{% url 'dashboard:hero_add' %}" class="dash-btn dash-btn--primary">Add slide</a>
+</div>
+<div class="dash-table-wrap">
+    <table class="dash-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Order</th>
+                <th>Pub.</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in items %}
+            <tr>
+                <td><strong>{{ s.title }}</strong><br><span class="text-xs text-slate-500 truncate max-w-xs block">{{ s.image_url|truncatechars:50 }}</span></td>
+                <td>{{ s.sort_order }}</td>
+                <td>{% if s.is_published %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <a href="{% url 'dashboard:hero_edit' s.pk %}" class="text-indigo-600 text-sm font-semibold">Edit</a>
+                    &nbsp;·&nbsp;
+                    <a href="{% url 'dashboard:hero_delete' s.pk %}" class="text-rose-600 text-sm">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" class="text-slate-500">No custom slides. You can add some here anytime.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

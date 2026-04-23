@@ -1,0 +1,19 @@
+{% extends "dashboard/base.html" %}
+{% block page_title %}{{ section_title }}{% endblock %}
+{% block content %}
+<p class="text-sm text-slate-600">This information appears on the public site: home, about, giving, and footer (where applicable).</p>
+<form method="post" enctype="multipart/form-data" class="dash-form-card">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="form-row">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}<span class="helptext">{{ field.help_text }}</span>{% endif %}
+            {{ field.errors }}
+        </div>
+    {% endfor %}
+    <div class="dash-actions" style="margin-top:0;">
+        <button type="submit" class="dash-btn dash-btn--primary">Save</button>
+    </div>
+</form>
+{% endblock %}

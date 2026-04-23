@@ -1,0 +1,51 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Overview{% endblock %}
+{% block page_title %}Overview{% endblock %}
+{% block content %}
+<p class="text-sm text-slate-600 max-w-2xl">Update sermons, events, service times, contact details, and more in one place. Use the menu on the left or jump in below.</p>
+<div class="dash-stat-grid">
+    <div class="dash-stat">
+        <div class="dash-stat__value">{{ stats.sermons }}</div>
+        <div class="dash-stat__label">Sermons (total)</div>
+    </div>
+    <div class="dash-stat">
+        <div class="dash-stat__value">{{ stats.events }}</div>
+        <div class="dash-stat__label">Events (total)</div>
+    </div>
+    <div class="dash-stat">
+        <div class="dash-stat__value">{{ stats.prayer }}</div>
+        <div class="dash-stat__label">Open prayer items</div>
+    </div>
+    <div class="dash-stat">
+        <div class="dash-stat__value">{{ stats.contact }}</div>
+        <div class="dash-stat__label">Contact messages</div>
+    </div>
+</div>
+<div class="dash-home-cards">
+    <a class="dash-tile" href="{% url 'dashboard:church_info' %}">
+        <h3>Church &amp; contact</h3>
+        <p>Name, tagline, pastor, WhatsApp, M-Pesa, mission &amp; vision</p>
+    </a>
+    <a class="dash-tile" href="{% url 'dashboard:sermon_list' %}">
+        <h3>Sermons &amp; videos</h3>
+        <p>Add YouTube links so they appear in Featured Videos</p>
+    </a>
+    <a class="dash-tile" href="{% url 'dashboard:event_list' %}">
+        <h3>Events</h3>
+        <p>Seminars, services, and outreach — date, place, image</p>
+    </a>
+    <a class="dash-tile" href="{% url 'dashboard:weekly_list' %}">
+        <h3>Weekly service times</h3>
+        <p>What visitors see in “Weekly services” on the home page</p>
+    </a>
+    <a class="dash-tile" href="{% url 'dashboard:prayer_list' %}">
+        <h3>Prayer requests</h3>
+        <p>Mark requests as prayed when you have interceded</p>
+    </a>
+    <a class="dash-tile" href="{% url 'dashboard:message_list' %}">
+        <h3>Contact form</h3>
+        <p>Read messages from the website</p>
+    </a>
+</div>
+<p class="text-xs text-slate-500 mt-8 max-w-xl">The old <code class="bg-slate-100 px-1 rounded">/admin/</code> page still exists for emergencies, but you can do everything you need from here.</p>
+{% endblock %}
