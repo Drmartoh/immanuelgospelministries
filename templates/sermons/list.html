@@ -5,7 +5,7 @@
     <div class="layout-container page-hero__inner">
         <p class="page-hero__eyebrow">Watch &amp; listen</p>
         <h1 class="page-hero__title font-display">Sermons</h1>
-        <p class="page-hero__subtitle">Video and audio messages — upload thumbnails and links from the admin.</p>
+        <p class="page-hero__subtitle">Video and audio messages to strengthen your walk in faith.</p>
     </div>
 </section>
 
@@ -23,8 +23,9 @@
                         <p class="mt-1 text-sm text-indigo-600">{{ sermon.preacher }} · {{ sermon.date }}</p>
                         {% if sermon.video_url %}
                             <div class="embed-responsive embed-responsive--16x9 mt-4">
-                                <iframe src="{{ sermon.embed_video_url }}" title="{{ sermon.title }}" allowfullscreen loading="lazy"></iframe>
+                                <iframe src="{{ sermon.embed_video_url }}?rel=0&modestbranding=1" title="{{ sermon.title }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
                             </div>
+                            <a href="{{ sermon.video_url }}" target="_blank" rel="noopener noreferrer" class="mt-3 inline-flex text-sm font-medium text-indigo-600 hover:text-indigo-800">Open on YouTube ↗</a>
                         {% endif %}
                         {% if sermon.audio_file %}
                             <audio controls class="mt-4 w-full rounded-lg">
@@ -35,7 +36,7 @@
                 </article>
             {% empty %}
                 <div class="glass-card col-span-full p-10 text-center text-slate-600 sm:col-span-2 lg:col-span-3">
-                    <p>No sermons uploaded yet.</p>
+                    <p>No sermons available yet.</p>
                 </div>
             {% endfor %}
         </div>

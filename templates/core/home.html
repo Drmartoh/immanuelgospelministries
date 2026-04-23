@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Home | Immanuel Gospel Ministries{% endblock %}
 {% block content %}
 <section class="hero-bg text-white overflow-hidden" x-data="{ activeSlide: 0 }" x-init="setInterval(() => { activeSlide = (activeSlide + 1) % {{ carousel_slides|length }} }, 5500)">
@@ -9,6 +10,18 @@
                 <h1 class="font-display text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">{{ info.name }}</h1>
                 <p class="mt-3 text-lg font-medium text-indigo-100 sm:text-xl">{{ info.tagline }}</p>
                 <p class="mt-4 max-w-xl text-slate-200/95 leading-relaxed text-sm sm:text-base">{{ info.description }}</p>
+                <div class="mt-5 inline-flex max-w-xl items-center gap-3 rounded-xl border border-white/20 bg-white/10 px-3 py-3 backdrop-blur-sm">
+                    <img
+                        src="{% if info and info.reverend_photo %}{{ info.reverend_photo.url }}{% else %}{% static 'images/hero/pastor-muhindi-profile.png' %}{% endif %}"
+                        alt="Rev. Samuel Muhindi Mwaura"
+                        class="h-14 w-14 rounded-full object-cover ring-2 ring-white/35"
+                        loading="lazy"
+                    >
+                    <div>
+                        <p class="text-sm font-semibold text-white">Rev. Samuel Muhindi Mwaura</p>
+                        <p class="text-xs text-indigo-100">A passionate servant of God dedicated to biblical teaching, prayer, and outreach.</p>
+                    </div>
+                </div>
                 <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                     <a href="{% url 'core:services' %}" class="btn-primary justify-center text-center sm:inline-flex">Join Us This Sunday</a>
                     <a href="{% url 'prayer:request' %}" class="inline-flex justify-center rounded-lg border border-white/30 bg-white/10 px-6 py-3 text-center text-sm font-semibold text-white hover:bg-white/20 transition-colors sm:text-base">Submit Prayer Request</a>
@@ -48,50 +61,36 @@
     </div>
 </section>
 
-<section class="section-mesh">
+<section class="section-mesh-dark">
     <div class="layout-container layout-section">
-        <h2 class="font-display text-2xl font-semibold text-slate-900 sm:text-3xl">Weekly Services</h2>
-        <p class="mt-2 max-w-2xl text-slate-600">Join us for midweek Bible study and Sunday worship in Megga, Nderi.</p>
-        <div class="mt-8 grid gap-4 sm:grid-cols-2">
-            {% for service in service_times %}
-                <div class="card-elevated p-5 sm:p-6" data-aos="fade-up">
-                    <p class="font-semibold text-indigo-600">{{ service.day }}</p>
-                    <p class="mt-1 font-medium text-slate-900">{{ service.name }}</p>
-                    <p class="mt-2 text-sm text-slate-500">{{ service.time }}</p>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            <a href="{% url 'sermons:list' %}" class="card-link">Latest Sermons</a>
-            <a href="{% url 'events:list' %}" class="card-link">Events &amp; Upcoming</a>
-            <a href="{% url 'events:seminars' %}" class="card-link">Seminars &amp; training</a>
-            <a href="{% url 'sermons:list' %}" class="card-link">Videos</a>
-            <a href="{% url 'events:list' %}" class="card-link">Gallery</a>
-            <a href="{% url 'core:giving' %}" class="card-link">Giving &amp; donor items</a>
-        </div>
-    </div>
-</section>
-
-<section class="relative overflow-hidden">
-    <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-indigo-100/50 via-white to-sky-50/40"></div>
-    <div class="relative layout-container layout-section">
         <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-            <h2 class="font-display text-2xl font-semibold text-slate-900 sm:text-3xl">Latest Sermons</h2>
-            <a href="{% url 'sermons:list' %}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800">View all →</a>
+            <h2 class="font-display text-2xl font-semibold text-white sm:text-3xl">Featured Videos</h2>
+            <a href="{% url 'sermons:list' %}" class="text-sm font-semibold text-indigo-200 hover:text-white">View all sermons →</a>
         </div>
-        <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {% for sermon in latest_sermons|slice:":3" %}
-                <div class="card-elevated group overflow-hidden" data-aos="fade-up">
-                    <div class="relative aspect-[16/10] overflow-hidden">
-                        <img src="{{ sermon.thumbnail_url }}" alt="{{ sermon.title }}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
-                    </div>
-                    <div class="p-5">
-                        <p class="font-display font-semibold text-slate-900 leading-snug">{{ sermon.title }}</p>
-                        <p class="mt-1 text-sm text-slate-500">{{ sermon.preacher }} · {{ sermon.date }}</p>
+        {% if featured_video %}
+            <div class="mt-6 rounded-2xl border border-white/20 bg-slate-900/45 p-4 sm:p-6 shadow-2xl shadow-indigo-900/20" data-aos="fade-up">
+                <p class="text-xs font-semibold uppercase tracking-wide text-indigo-200">Featured Sermon</p>
+                <h3 class="mt-2 font-display text-xl font-semibold text-white sm:text-2xl">{{ featured_video.title }}</h3>
+                <p class="mt-1 text-sm text-slate-200">{{ featured_video.preacher }} · {{ featured_video.date }}</p>
+                <p class="mt-2 text-sm text-slate-300">Watch this featured sermon and be encouraged in faith and prayer.</p>
+                <div class="embed-responsive embed-responsive--16x9 mt-4 ring-1 ring-white/20">
+                    <iframe src="{{ featured_video.embed_video_url }}?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1" title="{{ featured_video.title }}" allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+                </div>
+                <a href="{{ featured_video.video_url }}" target="_blank" rel="noopener noreferrer" class="mt-3 inline-flex text-sm font-medium text-indigo-200 hover:text-white">Open featured video on YouTube ↗</a>
+            </div>
+        {% endif %}
+        <div class="mt-6 grid gap-4 lg:grid-cols-3">
+            {% for sermon in featured_videos %}
+                <div class="rounded-xl border border-white/10 bg-slate-900/40 p-4 backdrop-blur-sm" data-aos="fade-up">
+                    <p class="font-display font-semibold text-white mb-3 leading-snug">{{ sermon.title }}</p>
+                    <div class="embed-responsive embed-responsive--16x9">
+                        <iframe src="{{ sermon.embed_video_url }}?rel=0&modestbranding=1" title="{{ sermon.title }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
                     </div>
                 </div>
             {% empty %}
-                <p class="col-span-full text-slate-600">No sermons available yet.</p>
+                {% if not featured_video %}
+                    <p class="text-slate-300 col-span-full">Video sermons will appear here soon.</p>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
@@ -99,22 +98,27 @@
 
 <section class="section-mesh">
     <div class="layout-container layout-section">
-        <h2 class="font-display text-2xl font-semibold text-slate-900 sm:text-3xl">Featured Events</h2>
-        <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {% for event in latest_events|slice:":3" %}
-                <a href="{% url 'events:detail' event.pk %}" class="card-elevated group block overflow-hidden" data-aos="fade-up">
-                    <div class="relative aspect-[16/10] overflow-hidden">
-                        <img src="{{ event.image_url }}" alt="{{ event.title }}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
-                    </div>
-                    <div class="p-5">
-                        <p class="font-display font-semibold text-slate-900 leading-snug group-hover:text-indigo-700 transition-colors">{{ event.title }}</p>
-                        <p class="mt-1 text-sm text-indigo-600">{{ event.date }}</p>
-                        <p class="mt-1 text-sm text-slate-500">{{ event.location }}</p>
-                    </div>
-                </a>
-            {% empty %}
-                <p class="col-span-full text-slate-600">No events available yet.</p>
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <h2 class="font-display text-2xl font-semibold text-slate-900 sm:text-3xl">Weekly Services</h2>
+            <a href="{% url 'core:services' %}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800">Full schedule →</a>
+        </div>
+        <p class="mt-2 max-w-2xl text-slate-600">Join us for midweek Bible study and Sunday worship in Megga, Nderi.</p>
+        <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {% for service in service_times %}
+                <div class="rounded-xl border border-indigo-100 bg-white p-4 shadow-sm transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-lg" data-aos="fade-up">
+                    <p class="inline-flex rounded-full bg-indigo-50 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-indigo-700">{{ service.day }}</p>
+                    <p class="mt-2 text-sm font-semibold text-slate-900 leading-snug">{{ service.name }}</p>
+                    <p class="mt-1 text-xs text-slate-600">{{ service.time }}</p>
+                </div>
             {% endfor %}
+        </div>
+        <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <a href="{% url 'sermons:list' %}" class="card-link">Sermons &amp; videos</a>
+            <a href="{% url 'events:list' %}" class="card-link">Events &amp; upcoming</a>
+            <a href="{% url 'events:seminars' %}" class="card-link">Seminars &amp; training</a>
+            <a href="#gallery" class="card-link">Gallery</a>
+            <a href="{% url 'core:giving' %}" class="card-link">Giving &amp; donor items</a>
+            <a href="{% url 'communication:contact' %}" class="card-link">Contact &amp; support</a>
         </div>
     </div>
 </section>
@@ -126,7 +130,7 @@
             <h2 class="font-display text-2xl font-semibold text-slate-900 sm:text-3xl">Seminars &amp; empowerment</h2>
             <a href="{% url 'events:seminars' %}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800">View all →</a>
         </div>
-        <p class="mt-2 max-w-2xl text-slate-600 text-sm sm:text-base">Training on entrepreneurship, life skills, and spiritual empowerment — managed as events in admin.</p>
+        <p class="mt-2 max-w-2xl text-slate-600 text-sm sm:text-base">Training on entrepreneurship, life skills, and spiritual empowerment for families and youth.</p>
         <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {% for seminar in seminars %}
                 <a href="{% url 'events:detail' seminar.pk %}" class="rounded-xl bg-gradient-to-br from-indigo-600 via-indigo-700 to-sky-600 p-5 text-white shadow-lg transition-transform hover:-translate-y-0.5 hover:shadow-xl" data-aos="fade-up">
@@ -138,31 +142,13 @@
                     <p class="mt-1 text-sm text-white/90">{{ seminar.location }}</p>
                 </a>
             {% empty %}
-                <div class="glass-card p-6 text-slate-600 sm:col-span-2 lg:col-span-3">No seminars yet. In admin, set an event’s <strong>Kind</strong> to “Seminar &amp; skills training” or include “seminar” in the title — e.g. entrepreneurship or empowerment workshops.</div>
+                <div class="glass-card p-6 text-slate-600 sm:col-span-2 lg:col-span-3">Upcoming seminars and empowerment sessions will appear here soon.</div>
             {% endfor %}
         </div>
     </div>
 </section>
 
-<section class="section-mesh-dark">
-    <div class="layout-container layout-section">
-        <h2 class="font-display text-2xl font-semibold text-white sm:text-3xl">Featured Videos</h2>
-        <div class="mt-8 grid gap-6 lg:grid-cols-2">
-            {% for sermon in featured_videos|slice:":4" %}
-                <div class="rounded-xl border border-white/10 bg-slate-900/40 p-4 backdrop-blur-sm" data-aos="fade-up">
-                    <p class="font-display font-semibold text-white mb-3 leading-snug">{{ sermon.title }}</p>
-                    <div class="embed-responsive embed-responsive--16x9">
-                        <iframe src="{{ sermon.embed_video_url }}" title="{{ sermon.title }}" allowfullscreen loading="lazy"></iframe>
-                    </div>
-                </div>
-            {% empty %}
-                <p class="text-slate-300 col-span-full">No video sermons yet.</p>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<section class="relative">
+<section id="gallery" class="relative">
     <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-200/35 to-transparent"></div>
     <div class="relative layout-container layout-section">
         <h2 class="font-display text-2xl font-semibold text-slate-900 sm:text-3xl">Gallery</h2>
@@ -173,10 +159,12 @@
                         <img src="{{ item.image.url }}" alt="" class="h-full w-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
                     {% elif item.thumbnail %}
                         <img src="{{ item.thumbnail.url }}" alt="" class="h-full w-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
+                    {% elif item.image_url %}
+                        <img src="{{ item.image_url }}" alt="{{ item.alt|default:'Church gallery image' }}" class="h-full w-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
                     {% endif %}
                 </div>
             {% empty %}
-                <p class="col-span-full glass-card p-8 text-center text-slate-600">Upload event images and sermon thumbnails to populate the gallery.</p>
+                <p class="col-span-full glass-card p-8 text-center text-slate-600">New ministry moments and photos will appear here soon.</p>
             {% endfor %}
         </div>
     </div>

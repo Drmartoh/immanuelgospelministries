@@ -1,5 +1,6 @@
 from django.db.models import Q
 from django.shortcuts import render
+from django.templatetags.static import static
 from django.utils import timezone
 from events.models import Event
 from sermons.models import Sermon
@@ -15,19 +16,21 @@ from .models import (
 
 
 def _carousel_slides():
+    pastor_slide = {
+        "title": "Rev. Samuel Muhindi Mwaura",
+        "subtitle": "Senior Pastor, Immanuel Gospel Ministries",
+        "image": static("images/hero/pastor-muhindi-profile.png"),
+    }
     slides = list(
         HeroSlide.objects.filter(is_published=True).order_by("sort_order", "id").values(
             "title", "subtitle", "image_url"
         )
     )
     if slides:
-        return [{"title": s["title"], "subtitle": s["subtitle"], "image": s["image_url"]} for s in slides]
+        mapped_slides = [{"title": s["title"], "subtitle": s["subtitle"], "image": s["image_url"]} for s in slides]
+        return [pastor_slide, *mapped_slides]
     return [
-        {
-            "title": "Welcome to Immanuel Gospel Ministries",
-            "subtitle": "Growing in faith, prayer, and God's Word together.",
-            "image": "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&w=1600&q=80",
-        },
+        pastor_slide,
         {
             "title": "Join Us Every Sunday",
             "subtitle": "Bible study, praise and worship, main service, and deliverance prayers.",
@@ -70,12 +73,28 @@ def home(request):
         .distinct()
         .order_by("date")[:6]
     )
-    featured_videos = pub_sermons.exclude(video_url="").order_by("-date")[:6]
+    videos_qs = pub_sermons.exclude(video_url="").order_by("-date")
+    featured_video = videos_qs.first()
+    featured_videos = videos_qs[1:5] if featured_video else videos_qs[:4]
     gallery_items = [
         item
         for item in list(latest_events[:4]) + list(latest_sermons[:4])
         if getattr(item, "image", None) or getattr(item, "thumbnail", None)
     ]
+    static_gallery_items = [
+        {"image_url": static("images/gallery/pastor-study-1.png"), "alt": "Pastor Muhindi studying scripture"},
+        {"image_url": static("images/gallery/pastor-seated-1.png"), "alt": "Pastor Muhindi at church service"},
+        {"image_url": static("images/gallery/pastor-couple-1.png"), "alt": "Pastor Muhindi with family"},
+        {"image_url": static("images/gallery/pastor-couple-2.png"), "alt": "Pastor Muhindi with family outdoors"},
+        {"image_url": static("images/gallery/pastor-couple-3.png"), "alt": "Pastor Muhindi with family portrait"},
+        {"image_url": static("images/gallery/facebook-gallery-1.jpg"), "alt": "Immanuel Gospel Ministries gallery image 1"},
+        {"image_url": static("images/gallery/facebook-gallery-2.jpg"), "alt": "Immanuel Gospel Ministries gallery image 2"},
+        {"image_url": static("images/gallery/facebook-gallery-3.jpg"), "alt": "Immanuel Gospel Ministries gallery image 3"},
+        {"image_url": static("images/gallery/facebook-gallery-4.jpg"), "alt": "Immanuel Gospel Ministries gallery image 4"},
+        {"image_url": static("images/gallery/facebook-gallery-5.jpg"), "alt": "Immanuel Gospel Ministries gallery image 5"},
+        {"image_url": static("images/gallery/facebook-gallery-6.jpg"), "alt": "Immanuel Gospel Ministries gallery image 6"},
+    ]
+    gallery_items = [*static_gallery_items, *gallery_items]
 
     context = {
         "info": ChurchInfo.objects.first(),
@@ -84,6 +103,7 @@ def home(request):
         "latest_sermons": latest_sermons,
         "seminars": seminars,
         "featured_videos": featured_videos,
+        "featured_video": featured_video,
         "gallery_items": gallery_items,
         "carousel_slides": _carousel_slides(),
         "service_times": _service_times(),

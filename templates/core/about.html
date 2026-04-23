@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}About | Immanuel Gospel Ministries{% endblock %}
 {% block content %}
 <section class="page-hero page-hero--about">
@@ -16,7 +17,7 @@
             {% if history %}
                 <p class="text-slate-700 leading-relaxed">{{ history.content }}</p>
             {% else %}
-                <p class="text-slate-600">Church history will appear here once it is published in the admin dashboard.</p>
+                <p class="text-slate-600">Church history details will appear here soon.</p>
             {% endif %}
         </div>
         <div class="grid gap-6 md:grid-cols-2 mb-10">
@@ -39,8 +40,18 @@
             {% endfor %}
         </div>
         <div class="section-mesh-dark rounded-2xl p-6 sm:p-10 shadow-xl" data-aos="fade-up">
-            <h2 class="font-display text-xl font-semibold text-white mb-3">{{ info.reverend_name }}</h2>
-            <p class="text-slate-300 leading-relaxed">{{ info.reverend_bio }}</p>
+            <div class="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
+                <img
+                    src="{% if info and info.reverend_photo %}{{ info.reverend_photo.url }}{% else %}{% static 'images/hero/pastor-muhindi-profile.png' %}{% endif %}"
+                    alt="{{ info.reverend_name|default:'Rev. Samuel Muhindi Mwaura' }}"
+                    class="h-28 w-28 rounded-full object-cover ring-4 ring-white/20 shadow-lg"
+                    loading="lazy"
+                >
+                <div>
+                    <h2 class="font-display text-xl font-semibold text-white mb-2">{{ info.reverend_name }}</h2>
+                    <p class="text-slate-300 leading-relaxed">{{ info.reverend_bio }}</p>
+                </div>
+            </div>
         </div>
     </div>
 </section>
