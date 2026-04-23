@@ -16,30 +16,66 @@ from .models import (
 
 
 def _carousel_slides():
-    pastor_slide = {
-        "title": "Rev. Samuel Muhindi Mwaura",
-        "subtitle": "Senior Pastor, Immanuel Gospel Ministries",
-        "image": static("images/hero/pastor-muhindi-profile.png"),
-    }
-    slides = list(
-        HeroSlide.objects.filter(is_published=True).order_by("sort_order", "id").values(
-            "title", "subtitle", "image_url"
-        )
-    )
-    if slides:
-        mapped_slides = [{"title": s["title"], "subtitle": s["subtitle"], "image": s["image_url"]} for s in slides]
-        return [pastor_slide, *mapped_slides]
     return [
-        pastor_slide,
         {
-            "title": "Join Us Every Sunday",
-            "subtitle": "Bible study, praise and worship, main service, and deliverance prayers.",
-            "image": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1600&q=80",
+            "title": "Rev. Samuel Muhindi Mwaura",
+            "subtitle": "Senior Pastor, Immanuel Gospel Ministries",
+            "image": static("images/hero/pastor-muhindi-profile.png"),
         },
         {
-            "title": "Midweek Biblical Studies",
-            "subtitle": "Wednesday fellowship dedicated to prayer and scripture.",
-            "image": "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1600&q=80",
+            "title": "Worship and Fellowship",
+            "subtitle": "Moments of faith, prayer, and praise in our church family.",
+            "image": static("images/gallery/pastor-study-1.png"),
+        },
+        {
+            "title": "Church Leadership",
+            "subtitle": "Serving with love, integrity, and biblical teaching.",
+            "image": static("images/gallery/pastor-seated-1.png"),
+        },
+        {
+            "title": "Family and Community",
+            "subtitle": "Building stronger homes and relationships through Christ.",
+            "image": static("images/gallery/pastor-couple-1.png"),
+        },
+        {
+            "title": "Together in Ministry",
+            "subtitle": "Walking in faith and sharing God’s love with others.",
+            "image": static("images/gallery/pastor-couple-2.png"),
+        },
+        {
+            "title": "Joyful Fellowship",
+            "subtitle": "Celebrating the goodness of God in every season.",
+            "image": static("images/gallery/pastor-couple-3.png"),
+        },
+        {
+            "title": "Ministry Highlights",
+            "subtitle": "Recent moments from church services and outreach.",
+            "image": static("images/gallery/facebook-gallery-1.jpg"),
+        },
+        {
+            "title": "Sunday Gatherings",
+            "subtitle": "Worship, the Word, and fellowship with one heart.",
+            "image": static("images/gallery/facebook-gallery-2.jpg"),
+        },
+        {
+            "title": "Faith in Action",
+            "subtitle": "Growing in prayer, discipleship, and service.",
+            "image": static("images/gallery/facebook-gallery-3.jpg"),
+        },
+        {
+            "title": "Church Moments",
+            "subtitle": "Snapshots of God’s grace in our congregation.",
+            "image": static("images/gallery/facebook-gallery-4.jpg"),
+        },
+        {
+            "title": "Community Life",
+            "subtitle": "A welcoming home for worship and spiritual growth.",
+            "image": static("images/gallery/facebook-gallery-5.jpg"),
+        },
+        {
+            "title": "Immanuel Gospel Ministries",
+            "subtitle": "Serving God and touching lives through the Gospel.",
+            "image": static("images/gallery/facebook-gallery-6.jpg"),
         },
     ]
 
